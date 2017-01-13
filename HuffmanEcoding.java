@@ -61,6 +61,26 @@ public class HuffmanEcoding{
     return pQueue;
   }
   
+  /**
+   * 
+   */
+  public void encodeFile(String inputFileName, BinaryTree encodingTree, String outputFileName){}
+  
+  /**
+   * 
+   */
+  public void decodeFile(String inputFileName, BinaryTree encodingTree, String outputFileName){}
+  
+  /**
+   * 
+   */
+  public void compress(String inputFileName, String outputFileName){}
+  
+  /**
+   * 
+   */
+  public void decompress(String inputFileName, String outputFileName){}
+  
   
   public static void main(String[] args){
     HuffmanEcoding h = new HuffmanEcoding();
