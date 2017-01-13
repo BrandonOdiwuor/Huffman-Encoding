@@ -3,13 +3,13 @@
  * Minimum Binary Heap data structure 
  */
 public class PriorityQueue{
-  private Node[] heap_array; // Internal storage structure for the heap 
+  private BinaryTree[] heap_array; // Internal storage structure for the heap 
   private int heap_size; // Number of items in the heap 
   private static int DEFAULT_CAPACITY = 50; // Default capacity of the heap_array
   
   @SuppressWarnings("unchecked") 
   public PriorityQueue(){ 
-    heap_array = new Node[DEFAULT_CAPACITY]; 
+    heap_array = new BinaryTree[DEFAULT_CAPACITY]; 
     heap_size = 0; 
   }
   
@@ -33,13 +33,13 @@ public class PriorityQueue{
    * Adds a new item into the queue 
    * @param element the item to be inserted into the queue 
    */ 
-  public void enqueue(Node element){ 
+  public void enqueue(BinaryTree element){ 
     if(heap_size == heap_array.length) 
       expandHeapArray(); 
     heap_array[heap_size] = element; 
     int index = heap_size; 
     heap_array[index] = element; 
-    while(index > 0 && heap_array[parent(index)].frequency > heap_array[index].frequency){ 
+    while(index > 0 && heap_array[parent(index)].totalFrequency > heap_array[index].totalFrequency){ 
       swap(parent(index), index); 
       index = parent(index); 
     } 
@@ -50,7 +50,7 @@ public class PriorityQueue{
    * Returns but does not remove the item with the minimum priority from the queue 
    * @return the element with the smallest priority in the queue 
    */ 
-  public Node peek(){ 
+  public BinaryTree peek(){ 
     return heap_array[0]; 
   } 
    
@@ -58,8 +58,8 @@ public class PriorityQueue{
    * Returns and removes the item with the smalles priority from the queue 
    * @return the item with the smallest priority from the queue 
    */ 
-  public Node dequeueMin(){ 
-    Node minElement = peek(); 
+  public BinaryTree dequeueMin(){ 
+    BinaryTree minElement = peek(); 
     heap_array[0] = heap_array[heap_size -1]; 
     heap_array[heap_size - 1] = null; 
     heap_size--; 
@@ -75,9 +75,9 @@ public class PriorityQueue{
     int smallest = index; 
     int left = left(index); 
     int right = right(index); 
-    if(left <= heap_size - 1 && heap_array[left].frequency <  heap_array[smallest].frequency) 
+    if(left <= heap_size - 1 && heap_array[left].totalFrequency <  heap_array[smallest].totalFrequency) 
       smallest = left(index); 
-    if(right <= heap_size - 1 && heap_array[right].frequency  < heap_array[smallest].frequency ) 
+    if(right <= heap_size - 1 && heap_array[right].totalFrequency  < heap_array[smallest].totalFrequency ) 
       smallest = right(index); 
     if(smallest != index){ 
       swap(smallest, index); 
@@ -89,7 +89,7 @@ public class PriorityQueue{
    * Swaps item at first_index with item on secpnd_index 
    */ 
   public void swap(int first_index, int second_index){ 
-    Node tmp = heap_array[first_index]; 
+    BinaryTree tmp = heap_array[first_index]; 
     heap_array[first_index] = heap_array[second_index]; 
    heap_array[second_index] = tmp; 
   }
@@ -100,7 +100,7 @@ public class PriorityQueue{
    */ 
   @SuppressWarnings("unchecked") 
   private void expandHeapArray(){ 
-    Node[] new_array = new Node[heap_array.length * 2]; 
+    BinaryTree[] new_array = new BinaryTree[heap_array.length * 2]; 
     for(int i = 0; i < heap_array.length; i++) 
       new_array[i] = heap_array[i]; 
     heap_array = new_array; 
@@ -129,19 +129,4 @@ public class PriorityQueue{
    
    // Returns the index of the parent of the node positioned at the index provided 
   private int parent(int i){return (i - 1)/ 2;}
-  
-  public static class Node{
-    public Character character = new Character(' ');
-    public int frequency;
-    public boolean isCharacter = true;
-    public Node(Character c, Integer freq){
-      character = c;
-      frequency = (int) freq;
-    }
-    
-    public Node(Integer freq){
-      isCharacter = false;
-      frequency = (int) freq;
-    }
-  }
 }
