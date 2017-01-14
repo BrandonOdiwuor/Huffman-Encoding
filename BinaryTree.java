@@ -1,4 +1,5 @@
 /**
+ * 
  * @author Brandon Wayne Odiwuor
  */
 
@@ -35,34 +36,51 @@ public class BinaryTree{
       drawTree(currNode.right, indentLevel+1);
   }
   
+  /**
+   * With the help of getEncodingTable() function, it returns a map representation of the whole tree
+   * @return a map contating the content of huffman tree
+   */
   public Map<Character,String> getEncodingTable(){
     Map<Character,String> t = new HashMap<Character,String>();
     getEncodingTable(root, t, "");
     return t;
   }
   
-  private void getEncodingTable(Node r, Map<Character,String> t, String s) { 
-    if (r == null) 
+  /**
+   * Creates a Map representation of the subtree starting from node
+   * @param node
+   * @param table
+   * @param string
+   */
+  private void getEncodingTable(Node node, Map<Character,String> table, String string) { 
+    if (node == null) 
       return; 
-    
-    if(r.left == null && r.right == null) 
-    { 
-      t.put(r.character, s.toString()); 
-    } 
-    else 
-    { 
-      getEncodingTable(r.left, t, s + '0'); 
-      getEncodingTable(r.right, t, s + '1'); 
-      
+    if(node.left == null && node.right == null) 
+      table.put(node.character, string.toString()); 
+    else { 
+      getEncodingTable(node.left, table, string + '0'); 
+      getEncodingTable(node.right, table, string + '1'); 
     } 
   }
   
+  /**
+   * with the aid of traverse() function returns an encoded string to its original form before encoding
+   * @param str the string to be decoded
+   * @returns the decoded version of str
+   */
   public String decodeString(String str){ 
     StringBuilder string = new StringBuilder();
     traverse(root, 0, str, string);
     return string.toString();
   }
   
+  /**
+   * Traverses a tree and re
+   * @param node
+   * @param index
+   * @param str
+   * param decodedString
+   */
   public void traverse(Node node, int index, String str, StringBuilder decodedString){
     if(index == str.length()){
       decodedString.append(node.character);
@@ -78,6 +96,9 @@ public class BinaryTree{
       traverse(node.right, ++index, str, decodedString);
   }
   
+  /**
+   * An Inner class storing information about the nodes in a tree
+   */
   public static class Node{
     public Character character = new Character(' ');
     public int frequency;

@@ -1,4 +1,5 @@
 /**
+ * Implementation of Huffman Encoding algorithm
  * @author Brandon Wayne Odiwuor
  */
 
