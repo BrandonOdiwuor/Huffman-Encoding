@@ -56,7 +56,11 @@ public class HuffmanEcoding{
   }
   
   /**
-   * 
+   * Reads a file (input file) and uses the encodingTree to encode the file and writes its 
+   * content in the output file
+   * @param inputFileName the name of the file to be encoded
+   * @param encodedTree the huffman tree to be used in encoding the inputFile
+   * @param outputFileName the name of the file that the encoded string is to be written
    */
   public void encodeFile(String inputFileName, BinaryTree encodingTree, String outputFileName){
     String encoding = "";
@@ -69,7 +73,11 @@ public class HuffmanEcoding{
   }
   
   /**
-   * 
+   * Reads an ecoded file (inputFile) and uses the encodingTree to decode the fileContents 
+   * before writting it into the outputFile
+   * @param inputFileName the name of the file to be decoded
+   * @param encodedTree the huffman tree to be used in decoding the inputFile
+   * @param outputFileName the name of the file that the decoded string is to be written
    */
   public void decodeFile(String inputFileName, BinaryTree encodingTree, String outputFileName){
     String inputFileContent = readFile(inputFileName);
@@ -87,7 +95,9 @@ public class HuffmanEcoding{
   public void decompress(String inputFileName, String outputFileName){}
   
   /**
-   * 
+   * Reads a file and returns a string containing the contents of the file
+   * @param fileName the name of the file being read
+   * @return String containg the contents of the file
    */
   public String readFile(String fileName){
     StringBuilder string = new StringBuilder();
@@ -105,7 +115,9 @@ public class HuffmanEcoding{
   }
   
   /**
-   * 
+   * Writes the contents of the string into the file whose name is given
+   * @param fineName the name of the file where the string is to be written
+   * @param string the string to be written in the file
    */
   public void writeToFile(String fileName, String string){
     try{
