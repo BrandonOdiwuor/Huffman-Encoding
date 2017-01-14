@@ -1,6 +1,7 @@
 /** 
  * Java implementation of Priority Queue Abstract Data Type using  
  * Minimum Binary Heap data structure 
+ * @author Brandon Wayne Odiwuor
  */
 public class PriorityQueue{
   private BinaryTree[] heap_array; // Internal storage structure for the heap 

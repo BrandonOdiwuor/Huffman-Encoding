@@ -1,3 +1,7 @@
+/**
+ * @author Brandon Wayne Odiwuor
+ */
+
 import java.util.HashMap;
 import java.io.IOException;
 import java.io.FileWriter;
