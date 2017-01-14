@@ -41,8 +41,7 @@ public class HuffmanEcoding{
     while(priorityQueue.size() != 1){
       BinaryTree tree1 = priorityQueue.dequeueMin();
       BinaryTree tree2= priorityQueue.dequeueMin();
-      BinaryTree tree3 = new BinaryTree(tree1, tree2);
-      priorityQueue.enqueue(tree3);
+      priorityQueue.enqueue(new BinaryTree(tree1, tree2));
     }
     return priorityQueue.dequeueMin();
   }
