@@ -1,9 +1,9 @@
 import java.util.HashMap;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.IOException;
 import java.io.FileWriter;
 import java.util.Map;
+import java.io.File;
+import java.util.Scanner;
 
 public class HuffmanEcoding{
   /**
@@ -13,21 +13,14 @@ public class HuffmanEcoding{
    */
   public HashMap<Character, Integer> getFrequencyTable(String fileName){
     HashMap<Character, Integer> frequencyTable = new HashMap<>();
-    try{
-      InputStream inputStream = new FileInputStream(fileName);
-      int charAsci;
-      while((charAsci = inputStream.read()) != -1){
-        System.out.print((char) charAsci + ", ");
-        if(frequencyTable.containsKey(new Character((char) charAsci))){
-          Integer frequency = frequencyTable.get(new Character((char) charAsci));
-          frequencyTable.put(new Character((char) charAsci), new Integer(++frequency));
-        }
-        else
-          frequencyTable.put(new Character((char) charAsci), new Integer(1));
+    String string = readFile(fileName);
+    for(char character : string.toCharArray()){
+      if(frequencyTable.containsKey(character)){
+        Integer frequency = frequencyTable.get(character);
+        frequencyTable.put(character, new Integer(++frequency));
       }
-      inputStream.close();
-    }catch(IOException ex){
-      ex.printStackTrace();
+      else
+        frequencyTable.put(character, new Integer(1));
     }
     return frequencyTable;
   }
@@ -46,10 +39,6 @@ public class HuffmanEcoding{
       BinaryTree tree3 = new BinaryTree(tree1, tree2);
       priorityQueue.enqueue(tree3);
     }
-    priorityQueue.peek().drawTree();
-    System.out.println(priorityQueue.peek().getEncodingTable());
-    //Map <Character, String> table = priorityQueue.peek().getEncodingTable();
-    encodeFile("document.txt", priorityQueue.peek(), "bits.txt");
     return priorityQueue.dequeueMin();
   }
   
@@ -72,26 +61,19 @@ public class HuffmanEcoding{
   public void encodeFile(String inputFileName, BinaryTree encodingTree, String outputFileName){
     String encoding = "";
     Map<Character,String> encodingTable = encodingTree.getEncodingTable();
-    try{
-      InputStream inputStream = new FileInputStream(inputFileName);
-      FileWriter writer = new FileWriter(outputFileName);
-      int charAsci;
-      while((charAsci = inputStream.read()) != -1)
-        encoding += encodingTable.get(new Character((char) charAsci));
-      writer.write(encoding);
-      writer.flush();
-      writer.close();
-      System.out.println(encoding);
-      inputStream.close();
-    }catch(IOException ex){
-      ex.printStackTrace();
-    }
+    String inputFileContents = readFile(inputFileName);
+    for(char character : inputFileContents.toCharArray())
+      encoding += encodingTable.get(new Character(character));
+    writeToFile(outputFileName, encoding);
+    System.out.println(encodingTree.decodeString(encoding));
   }
   
   /**
    * 
    */
   public void decodeFile(String inputFileName, BinaryTree encodingTree, String outputFileName){
+    String inputFileContent = readFile(inputFileName);
+    writeToFile(outputFileName,  encodingTree.decodeString(inputFileContent));
   }
   
   /**
@@ -103,6 +85,38 @@ public class HuffmanEcoding{
    * 
    */
   public void decompress(String inputFileName, String outputFileName){}
+  
+  /**
+   * 
+   */
+  public String readFile(String fileName){
+    StringBuilder string = new StringBuilder();
+    try{
+      File file = new File(fileName); 
+      Scanner input = new Scanner(System.in); 
+      input = new Scanner(file); 
+      while (input.hasNextLine()) 
+        string.append(input.nextLine()); 
+      input.close();
+    }catch(IOException ex){
+      ex.printStackTrace();
+    }
+    return string.toString();
+  }
+  
+  /**
+   * 
+   */
+  public void writeToFile(String fileName, String string){
+    try{
+      FileWriter writer = new FileWriter(fileName);
+      writer.write(string);
+      writer.flush();
+      writer.close();
+    }catch(IOException ex){
+      ex.printStackTrace();
+    }
+  }
   
   
   public static void main(String[] args){

@@ -53,6 +53,27 @@ public class BinaryTree{
     } 
   }
   
+  public String decodeString(String str){ 
+    StringBuilder string = new StringBuilder();
+    traverse(root, 0, str, string);
+    return string.toString();
+  }
+  
+  public void traverse(Node node, int index, String str, StringBuilder decodedString){
+    if(index == str.length()){
+      decodedString.append(node.character);
+      return;
+    }
+    if(node.left == null && node.right == null){
+      decodedString.append(node.character);
+      traverse(root,  index, str, decodedString);
+    }
+    else if(str.charAt(index) == '0')
+      traverse(node.left, ++index, str, decodedString);
+    else
+      traverse(node.right, ++index, str, decodedString);
+  }
+  
   public static class Node{
     public Character character = new Character(' ');
     public int frequency;
