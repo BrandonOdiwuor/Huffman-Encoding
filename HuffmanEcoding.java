@@ -2,6 +2,7 @@ import java.util.HashMap;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.IOException;
+import java.io.FileWriter;
 import java.util.Map;
 
 public class HuffmanEcoding{
@@ -46,9 +47,9 @@ public class HuffmanEcoding{
       priorityQueue.enqueue(tree3);
     }
     priorityQueue.peek().drawTree();
-    //System.out.println(priorityQueue.peek().getEncodingTable());
-    Map <Character, String> table = priorityQueue.peek().getEncodingTable();
-    encodeFile("document.txt", table, "document.txt");
+    System.out.println(priorityQueue.peek().getEncodingTable());
+    //Map <Character, String> table = priorityQueue.peek().getEncodingTable();
+    encodeFile("document.txt", priorityQueue.peek(), "bits.txt");
     return priorityQueue.dequeueMin();
   }
   
@@ -68,14 +69,18 @@ public class HuffmanEcoding{
   /**
    * 
    */
-  public void encodeFile(String inputFileName, Map<Character,String> encodingTree, String outputFileName){
+  public void encodeFile(String inputFileName, BinaryTree encodingTree, String outputFileName){
+    String encoding = "";
+    Map<Character,String> encodingTable = encodingTree.getEncodingTable();
     try{
       InputStream inputStream = new FileInputStream(inputFileName);
+      FileWriter writer = new FileWriter(outputFileName);
       int charAsci;
-      String encoding = "";
-      while((charAsci = inputStream.read()) != -1){
-        encoding += encodingTree.get(new Character((char) charAsci));
-      }
+      while((charAsci = inputStream.read()) != -1)
+        encoding += encodingTable.get(new Character((char) charAsci));
+      writer.write(encoding);
+      writer.flush();
+      writer.close();
       System.out.println(encoding);
       inputStream.close();
     }catch(IOException ex){
@@ -86,7 +91,8 @@ public class HuffmanEcoding{
   /**
    * 
    */
-  public void decodeFile(String inputFileName, Map<Character,String> encodingTree, String outputFileName){}
+  public void decodeFile(String inputFileName, BinaryTree encodingTree, String outputFileName){
+  }
   
   /**
    * 
