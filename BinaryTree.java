@@ -1,3 +1,6 @@
+import java.util.Map;
+import java.util.HashMap;
+
 public class BinaryTree{  
   public Node root;
   public int totalFrequency = 0;
@@ -20,12 +23,34 @@ public class BinaryTree{
   
   public void drawTree(Node currNode, int indentLevel){
     for (int i=0; i<indentLevel; i++)
-                System.out.print("\t");
+      System.out.print("\t");
     System.out.println(" * " + currNode.character + " " + currNode.frequency);
     if(currNode.left != null)
       drawTree(currNode.left, indentLevel+1);
     if(currNode.right != null)
       drawTree(currNode.right, indentLevel+1);
+  }
+  
+  public Map<Character,String> getEncodingTable(){
+    Map<Character,String> t = new HashMap<Character,String>();
+    getEncodingTable(root, t, "");
+    return t;
+  }
+  
+  private void getEncodingTable(Node r, Map<Character,String> t, String s) { 
+    if (r == null) 
+      return; 
+    
+    if(r.left == null && r.right == null) 
+    { 
+      t.put(r.character, s.toString()); 
+    } 
+    else 
+    { 
+      getEncodingTable(r.left, t, s + '0'); 
+      getEncodingTable(r.right, t, s + '1'); 
+      
+    } 
   }
   
   public static class Node{

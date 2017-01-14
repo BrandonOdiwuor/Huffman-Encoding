@@ -16,7 +16,7 @@ public class HuffmanEcoding{
       InputStream inputStream = new FileInputStream(fileName);
       int charAsci;
       while((charAsci = inputStream.read()) != -1){
-        //System.out.print((char) charAsci + ", ");
+        System.out.print((char) charAsci + ", ");
         if(frequencyTable.containsKey(new Character((char) charAsci))){
           Integer frequency = frequencyTable.get(new Character((char) charAsci));
           frequencyTable.put(new Character((char) charAsci), new Integer(++frequency));
@@ -45,6 +45,10 @@ public class HuffmanEcoding{
       BinaryTree tree3 = new BinaryTree(tree1, tree2);
       priorityQueue.enqueue(tree3);
     }
+    priorityQueue.peek().drawTree();
+    //System.out.println(priorityQueue.peek().getEncodingTable());
+    Map <Character, String> table = priorityQueue.peek().getEncodingTable();
+    encodeFile("document.txt", table, "document.txt");
     return priorityQueue.dequeueMin();
   }
   
@@ -64,12 +68,25 @@ public class HuffmanEcoding{
   /**
    * 
    */
-  public void encodeFile(String inputFileName, BinaryTree encodingTree, String outputFileName){}
+  public void encodeFile(String inputFileName, Map<Character,String> encodingTree, String outputFileName){
+    try{
+      InputStream inputStream = new FileInputStream(inputFileName);
+      int charAsci;
+      String encoding = "";
+      while((charAsci = inputStream.read()) != -1){
+        encoding += encodingTree.get(new Character((char) charAsci));
+      }
+      System.out.println(encoding);
+      inputStream.close();
+    }catch(IOException ex){
+      ex.printStackTrace();
+    }
+  }
   
   /**
    * 
    */
-  public void decodeFile(String inputFileName, BinaryTree encodingTree, String outputFileName){}
+  public void decodeFile(String inputFileName, Map<Character,String> encodingTree, String outputFileName){}
   
   /**
    * 
@@ -85,7 +102,7 @@ public class HuffmanEcoding{
   public static void main(String[] args){
     HuffmanEcoding h = new HuffmanEcoding();
     HashMap<Character, Integer> fTable = h.getFrequencyTable("document.txt");
-    //System.out.println(fTable);
+    System.out.println(fTable);
     h.buildEcodingTree(fTable);
   }
 }
