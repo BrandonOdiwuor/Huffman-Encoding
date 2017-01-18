@@ -73,7 +73,6 @@ public class HuffmanEcoding{
     for(char character : inputFileContents.toCharArray())
       encoding += encodingTable.get(new Character(character));
     writeToFile(outputFileName, encoding);
-    System.out.println(encodingTree.decodeString(encoding));
   }
   
   /**
@@ -91,12 +90,39 @@ public class HuffmanEcoding{
   /**
    * 
    */
-  public void compress(String inputFileName, String outputFileName){}
+  public void compress(String inputFileName, String outputFileName){
+    String inputFileContent = readFile(inputFileName);
+     HashMap<Character, Integer> frequencyTable = getFrequencyTable(inputFileName);
+     HuffmanTree encodingTree = buildEcodingTree(frequencyTable);
+     encodeFile(inputFileName, encodingTree, outputFileName);
+     writeToFile("encoding_tree.txt", encodingTree.toString());
+  }
   
   /**
    * 
    */
-  public void decompress(String inputFileName, String outputFileName){}
+  public void decompress(String inputFileName, String outputFileName){
+    HashMap<Character, Integer> frequencyTable = getFrequencyTableFromFile("encoding_tree.txt");
+    HuffmanTree encodingTree = buildEcodingTree(frequencyTable);
+    decodeFile(inputFileName, encodingTree, outputFileName);
+  }
+  
+  public HashMap<Character, Integer> getFrequencyTableFromFile(String fileName){
+    HashMap<Character, Integer> frequencyTable = new HashMap<>();
+    try{
+      File file = new File(fileName); 
+      Scanner input = new Scanner(System.in); 
+      input = new Scanner(file); 
+      while (input.hasNextLine()) {
+        String[] token = input.nextLine().split("\t");
+        frequencyTable.put(token[0].charAt(0), Integer.parseInt(token[1]));
+      }
+      input.close();
+    }catch(IOException ex){
+      ex.printStackTrace();
+    }
+    return frequencyTable;
+  }
   
   /**
    * Reads a file and returns a string containing the contents of the file
@@ -136,9 +162,8 @@ public class HuffmanEcoding{
   
   
   public static void main(String[] args){
-    HuffmanEcoding h = new HuffmanEcoding();
-    HashMap<Character, Integer> fTable = h.getFrequencyTable("document.txt");
-    System.out.println(fTable);
-    h.buildEcodingTree(fTable);
+    HuffmanEcoding huffmanEcoding = new HuffmanEcoding();
+     huffmanEcoding.compress("document.txt", "bits.txt");
+     huffmanEcoding.decompress("bits.txt", "decodedFile.txt");
   }
 }

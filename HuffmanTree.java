@@ -106,11 +106,27 @@ public class HuffmanTree{
       traverse(node.right, ++index, str, decodedString);
   }
   
+  public String toString(){
+    StringBuilder tree = new StringBuilder();
+    getSubtreeString(root, tree);
+    return tree.toString();
+  }
+  
+  public void getSubtreeString(Node currNode, StringBuilder str){
+    if(currNode.character != '~')
+      str.append(currNode.character + "\t" + currNode.frequency + "\n");
+    if(currNode.left != null)
+      getSubtreeString(currNode.left, str);
+    if(currNode.right != null)
+      getSubtreeString(currNode.right, str);
+    
+  }
+  
   /**
    * An Inner class to store information about the Huffman Tree nodes
    */
   public static class Node{
-    public Character character = new Character(' ');
+    public Character character = new Character('~');
     public int frequency;
     public boolean isCharacter = true;
     public Node left;
