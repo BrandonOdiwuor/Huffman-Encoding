@@ -32,29 +32,29 @@ public class HuffmanEcoding{
   
   /**
    * With the help of buildAndPorpulatePriorityQueue() function it builds an encoding tree 
-   * from the frequncy table provided and returns a binary tree representation of the tree
+   * from the frequncy table provided and returns a Huffman Tree
    * @param frequencies the frequency table to be used in building the encoding tree
-   * @return a binary tree representation of the encoding tree created
+   * @return the resulting Huffman Tree created
    */
-  public BinaryTree buildEcodingTree(HashMap<Character, Integer> frequencies){
+  public HuffmanTree buildEcodingTree(HashMap<Character, Integer> frequencies){
     PriorityQueue priorityQueue = buildAndPorpulatePriorityQueue(frequencies);
     while(priorityQueue.size() != 1){
-      BinaryTree tree1 = priorityQueue.dequeueMin();
-      BinaryTree tree2= priorityQueue.dequeueMin();
-      priorityQueue.enqueue(new BinaryTree(tree1, tree2));
+      HuffmanTree tree1 = priorityQueue.dequeueMin();
+      HuffmanTree tree2= priorityQueue.dequeueMin();
+      priorityQueue.enqueue(new HuffmanTree(tree1, tree2));
     }
     return priorityQueue.dequeueMin();
   }
   
   /**
-   * Builds and returns a priority queue of binary trees from the frequency table given
-   * @param frequencies the frequency table used in creating priority queue of binary trees
-   * @return a priority queue of binary trees created from the frequency table
+   * Builds and returns a priority queue of Huffman Trees from the frequency table given
+   * @param frequencies the frequency table used in creating priority queue of huffman trees
+   * @return a priority queue of Huffman Trees created from the frequency table
    */
   public PriorityQueue buildAndPorpulatePriorityQueue(HashMap<Character, Integer> frequencies){
     PriorityQueue pQueue = new PriorityQueue();
     for(Map.Entry<Character, Integer> entry : frequencies.entrySet() ){
-      pQueue.enqueue(new BinaryTree(entry.getKey(), entry.getValue()));
+      pQueue.enqueue(new HuffmanTree(entry.getKey(), entry.getValue()));
     }
     return pQueue;
   }
@@ -66,7 +66,7 @@ public class HuffmanEcoding{
    * @param encodedTree the huffman tree to be used in encoding the inputFile
    * @param outputFileName the name of the file that the encoded string is to be written
    */
-  public void encodeFile(String inputFileName, BinaryTree encodingTree, String outputFileName){
+  public void encodeFile(String inputFileName, HuffmanTree encodingTree, String outputFileName){
     String encoding = "";
     Map<Character,String> encodingTable = encodingTree.getEncodingTable();
     String inputFileContents = readFile(inputFileName);
@@ -83,7 +83,7 @@ public class HuffmanEcoding{
    * @param encodedTree the huffman tree to be used in decoding the inputFile
    * @param outputFileName the name of the file that the decoded string is to be written
    */
-  public void decodeFile(String inputFileName, BinaryTree encodingTree, String outputFileName){
+  public void decodeFile(String inputFileName, HuffmanTree encodingTree, String outputFileName){
     String inputFileContent = readFile(inputFileName);
     writeToFile(outputFileName,  encodingTree.decodeString(inputFileContent));
   }

@@ -1,21 +1,31 @@
 /**
- * 
+ * The class stores information about Huffman Nodes
  * @author Brandon Wayne Odiwuor
  */
 
 import java.util.Map;
 import java.util.HashMap;
 
-public class BinaryTree{  
+public class HuffmanTree{  
   public Node root;
   public int totalFrequency = 0;
   
-  public BinaryTree(Character c, Integer freq){
+  /**
+   * Constructor for a huffman tree whose root node stores a character
+   * @param c the character to be stored in the huffman root node
+   * @param freq the frequency of the character c
+   */
+  public HuffmanTree(Character c, Integer freq){
     root = new Node(c, freq);
     totalFrequency += freq;
   }
   
-  public BinaryTree(BinaryTree left, BinaryTree right){
+  /**
+   * Creates a new tree as a result of merging two trees
+   * @param left the tree to be added as a the left of the new tree
+   * @param right the tree to be added as the right of the new tree
+   */
+  public HuffmanTree(HuffmanTree left, HuffmanTree right){
     root = new Node(left.totalFrequency + right.totalFrequency);
     root.left = left.root;
     root.right = right.root;
@@ -97,7 +107,7 @@ public class BinaryTree{
   }
   
   /**
-   * An Inner class storing information about the nodes in a tree
+   * An Inner class to store information about the Huffman Tree nodes
    */
   public static class Node{
     public Character character = new Character(' ');
@@ -106,11 +116,17 @@ public class BinaryTree{
     public Node left;
     public Node right;
     
+    /**
+     * Constructor for nodes that store characters(leaves of a Huffman Tree)
+     * @param c character to be stored at the leaf node
+     * @param freq frequency of the character
+     */
     public Node(Character c, Integer freq){
       character = c;
       frequency = (int) freq;
     }
     
+    /***/
     public Node(Integer freq){
       isCharacter = false;
       frequency = (int) freq;

@@ -4,13 +4,13 @@
  * @author Brandon Wayne Odiwuor
  */
 public class PriorityQueue{
-  private BinaryTree[] heap_array; // Internal storage structure for the heap 
+  private HuffmanTree[] heap_array; // Internal storage structure for the heap 
   private int heap_size; // Number of items in the heap 
   private static int DEFAULT_CAPACITY = 50; // Default capacity of the heap_array
   
   @SuppressWarnings("unchecked") 
   public PriorityQueue(){ 
-    heap_array = new BinaryTree[DEFAULT_CAPACITY]; 
+    heap_array = new HuffmanTree[DEFAULT_CAPACITY]; 
     heap_size = 0; 
   }
   
@@ -34,7 +34,7 @@ public class PriorityQueue{
    * Adds a new item into the queue 
    * @param element the item to be inserted into the queue 
    */ 
-  public void enqueue(BinaryTree element){ 
+  public void enqueue(HuffmanTree element){ 
     if(heap_size == heap_array.length) 
       expandHeapArray(); 
     heap_array[heap_size] = element; 
@@ -51,7 +51,7 @@ public class PriorityQueue{
    * Returns but does not remove the item with the minimum priority from the queue 
    * @return the element with the smallest priority in the queue 
    */ 
-  public BinaryTree peek(){ 
+  public HuffmanTree peek(){ 
     return heap_array[0]; 
   } 
    
@@ -59,8 +59,8 @@ public class PriorityQueue{
    * Returns and removes the item with the smalles priority from the queue 
    * @return the item with the smallest priority from the queue 
    */ 
-  public BinaryTree dequeueMin(){ 
-    BinaryTree minElement = peek(); 
+  public HuffmanTree dequeueMin(){ 
+    HuffmanTree minElement = peek(); 
     heap_array[0] = heap_array[heap_size -1]; 
     heap_array[heap_size - 1] = null; 
     heap_size--; 
@@ -90,7 +90,7 @@ public class PriorityQueue{
    * Swaps item at first_index with item on secpnd_index 
    */ 
   public void swap(int first_index, int second_index){ 
-    BinaryTree tmp = heap_array[first_index]; 
+    HuffmanTree tmp = heap_array[first_index]; 
     heap_array[first_index] = heap_array[second_index]; 
    heap_array[second_index] = tmp; 
   }
@@ -101,7 +101,7 @@ public class PriorityQueue{
    */ 
   @SuppressWarnings("unchecked") 
   private void expandHeapArray(){ 
-    BinaryTree[] new_array = new BinaryTree[heap_array.length * 2]; 
+    HuffmanTree[] new_array = new HuffmanTree[heap_array.length * 2]; 
     for(int i = 0; i < heap_array.length; i++) 
       new_array[i] = heap_array[i]; 
     heap_array = new_array; 
