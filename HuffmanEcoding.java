@@ -88,7 +88,11 @@ public class HuffmanEcoding{
   }
   
   /**
-   * 
+   * With the help of encodeFile() function, compresses an input file and writes 
+   * a string representation of the resultant bits into output file
+   * @param inputFileName the file to be compressed
+   * @param outputFileName the name of the file containing a string representation 
+   *                    bit output from the compression
    */
   public void compress(String inputFileName, String outputFileName){
     String inputFileContent = readFile(inputFileName);
@@ -99,7 +103,9 @@ public class HuffmanEcoding{
   }
   
   /**
-   * 
+   * With the hel of decodeFile() function, reads bits from the input file and reconstructs the original document
+   * @param inputFileName
+   * @param outputFileName
    */
   public void decompress(String inputFileName, String outputFileName){
     HashMap<Character, Integer> frequencyTable = getFrequencyTableFromFile("encoding_tree.txt");
@@ -107,6 +113,10 @@ public class HuffmanEcoding{
     decodeFile(inputFileName, encodingTree, outputFileName);
   }
   
+  /**
+   * Reads the input file and reconstructs the frequency table
+   * @param fileName the name of the file to be used in reconstructing the frequency table
+   */
   public HashMap<Character, Integer> getFrequencyTableFromFile(String fileName){
     HashMap<Character, Integer> frequencyTable = new HashMap<>();
     try{
